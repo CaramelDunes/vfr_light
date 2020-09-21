@@ -1,0 +1,38 @@
+name: nofussppg
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_map: ^0.10.1
+  enviro_sensors: ^1.0.1
+  geolocator: ^6.0.0+1
+  font_awesome_flutter: ^8.8.1
+  path_provider: ^1.6.11
+  wakelock: ^0.1.4+2
+
+  cupertino_icons: ^0.1.3
+
+
+  cached_network_image: ^2.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/offlineMap/8/
+    - assets/offlineMap/9/
+    - assets/offlineMap/10/
+    - assets/offlineMap/11/
+    - assets/survol.png
