@@ -63,13 +63,13 @@ class _FlightMapState extends State<FlightMap> {
                 urlTemplate:
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: ['a', 'b', 'c']),
-           PresetLayers.oaciVfrFrance,
-            // TileLayerOptions(
-            //     opacity: 0.5,
-            //     tileProvider: AssetTileProvider(),
-            //     urlTemplate: "assets/offlineMap/{z}/{x}-{y}.jpg",
-            //     minNativeZoom: 8,
-            //     maxNativeZoom: 11),
+           // PresetLayers.oaciVfrFrance,
+            TileLayerOptions(
+                opacity: 0.5,
+                tileProvider: AssetTileProvider(),
+                urlTemplate: "assets/offline_layers/oaci_vfr/{z}/{x}-{y}.jpg",
+                minNativeZoom: 8,
+                maxNativeZoom: 11),
             PolylineLayerOptions(polylines: [
               if (_headingPolyline != null) _headingPolyline,
               if (widget.route != null) widget.route

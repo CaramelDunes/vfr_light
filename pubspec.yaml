@@ -27,12 +27,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: "^0.8.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/offlineMap/8/
-    - assets/offlineMap/9/
-    - assets/offlineMap/10/
-    - assets/offlineMap/11/
+    - assets/offline_layers/oaci_vfr
     - assets/survol.png
