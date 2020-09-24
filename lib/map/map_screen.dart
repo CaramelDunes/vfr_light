@@ -7,15 +7,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong/latlong.dart';
 import 'package:wakelock/wakelock.dart';
 
-import 'record_button.dart';
-import 'route_manager.dart';
+import '../record_button.dart';
+import '../route_manager.dart';
 import 'flight_map.dart';
-import 'instruments.dart';
-import 'instruments_data_source.dart';
-import 'over_cities_screen.dart';
-import 'navigation_data_source.dart';
-import 'navigation_info.dart';
-import 'settings_screen.dart';
+import '../instruments.dart';
+import '../instruments_data_source.dart';
+import '../over_cities_screen.dart';
+import '../navigation_data_source.dart';
+import '../navigation_info.dart';
+import '../settings_screen.dart';
 
 class MapScreen extends StatefulWidget {
   @override

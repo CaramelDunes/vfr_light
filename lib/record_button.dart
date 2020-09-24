@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_foreground_plugin/flutter_foreground_plugin.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'flight_recorder.dart';
@@ -53,6 +54,8 @@ class _RecordButtonState extends State<RecordButton> {
       _recorderSubscription = null;
       _flightRecorder.dispose();
       _flightRecorder = null;
+
+      FlutterForegroundPlugin.stopForegroundService();
     } else {
       getExternalStorageDirectory().then((value) {
         DateTime now = DateTime.now();
@@ -60,6 +63,7 @@ class _RecordButtonState extends State<RecordButton> {
             '${value.path}/${now.year}-${now.month}-${now.day}_${now.hour}-${now.minute}.csv';
 
         File outputFile = File(path);
+        print('Saving trace to $path');
 
         if (!outputFile.existsSync()) {
           _flightRecorder = FlightRecorder(outputFile);
@@ -71,7 +75,17 @@ class _RecordButtonState extends State<RecordButton> {
           _recorderSubscription = widget.dataSource.data.listen((event) {
             _flightRecorder.appendData(event);
           });
+        } else {
+          print('File already exists!');
         }
+
+        // Start a foreground service to keep receiving location updates when
+        // the app is in the background.
+        // Turns out I don't need any special background location library :-)
+        FlutterForegroundPlugin.startForegroundService(
+          title: "No Fuss PPG location service",
+          iconName: "ic_launcher",
+        );
       });
     }
   }

@@ -20,6 +20,7 @@ dependencies:
 
   cupertino_icons: ^0.1.3
 
+  flutter_foreground_plugin: ^0.5.0
 
   cached_network_image: ^2.3.1
 
@@ -38,5 +39,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/offline_layers/oaci_vfr
+    - assets/offline_layers/oaci_vfr/8/
+    - assets/offline_layers/oaci_vfr/9/
+    - assets/offline_layers/oaci_vfr/10/
+    - assets/offline_layers/oaci_vfr/11/
     - assets/survol.png

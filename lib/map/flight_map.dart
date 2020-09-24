@@ -6,7 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 
 import 'package:nofussppg/instruments_data_source.dart';
 import 'package:latlong/latlong.dart';
-import 'preset_layers.dart';
+import '../preset_layers.dart';
 
 class FlightMap extends StatefulWidget {
   final Stream<InstrumentsData> dataStream;
