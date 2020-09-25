@@ -1,4 +1,4 @@
-# nofussppg
+# vfr_essentials
 
 A new Flutter project.
 

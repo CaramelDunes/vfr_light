@@ -1,6 +1,6 @@
 import 'package:flutter_map/flutter_map.dart';
 
-import 'package:nofussppg/user_agent_tile_provider.dart';
+import 'package:vfr_essentials/user_agent_tile_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path/path.dart' as p;

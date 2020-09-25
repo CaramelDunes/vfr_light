@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:latlong/latlong.dart';
 
-import 'package:nofussppg/instruments_data_source.dart';
+import 'package:vfr_essentials/instruments_data_source.dart';
 
 class FlightRecorder {
   IOSink _outputSink;
