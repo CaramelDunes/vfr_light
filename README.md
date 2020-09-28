@@ -1,4 +1,4 @@
-# VFR Light
+# VFR Light [![Build Status](https://api.cirrus-ci.com/github/CaramelDunes/vfr_light.svg)](https://cirrus-ci.com/github/CaramelDunes/vfr_light)
 
 VFR Light is a lightweight assistant for pilots flying under VFR.
 
@@ -15,3 +15,24 @@ VFR Light is a lightweight assistant for pilots flying under VFR.
 ## Requirements
 
 A device with a barometer and a GPS receiver.
+
+## Building
+
+Download the French VFR charts with
+
+```
+pub get
+dart bin/download_oaci_vfr.dart
+```
+
+Build the apk with
+
+```
+flutter build apk
+```
+
+## License
+
+Licensed under the GNU General Public License v3.0.
+
+See [LICENSE](LICENSE) for more information.
