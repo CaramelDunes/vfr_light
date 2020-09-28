@@ -43,4 +43,5 @@ app.*.map.json
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-assets/offline_layers/**
+assets/offline_layers/oaci_vfr/**
+!assets/offline_layers/oaci_vfr/.gitkeep
