@@ -7,6 +7,7 @@ android_build_task:
   oaci_vfr_cache:
     folder: assets/offline_layers/oaci_vfr
   build_script:
+    - pub get
     - dart bin/download_oaci_vfr.dart
     - flutter build apk
   apk_artifacts:
