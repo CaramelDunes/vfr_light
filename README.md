@@ -1,4 +1,4 @@
-# vfr_essentials
+# vfr_light
 
 A new Flutter project.
 

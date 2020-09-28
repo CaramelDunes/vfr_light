@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-import 'package:vfr_essentials/instruments_data_source.dart';
+import 'package:vfr_light/instruments_data_source.dart';
 import 'package:latlong/latlong.dart';
 import '../preset_layers.dart';
 
