@@ -1,0 +1,14 @@
+container:
+  image: cirrusci/flutter:latest
+
+android_build_task:
+  pub_cache:
+    folder: ~/.pub-cache
+  oaci_vfr_cache:
+    folder: assets/offline_layers/oaci_vfr
+  build_script:
+    - pub get
+    - dart bin/download_oaci_vfr.dart
+    - flutter build apk
+  apk_artifacts:
+    path: "build/app/outputs/apk/release/app-release.apk"
