@@ -113,7 +113,7 @@ class _MapScreenState extends State<MapScreen> {
                                 },
                               ),
                               SizedBox(height: 8),
-                              ElevatedButton(
+                              RaisedButton(
                                 child: Text('Submit'),
                                 onPressed: () {
                                   print(double.parse(val));
