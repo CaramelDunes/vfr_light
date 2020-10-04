@@ -1,4 +1,4 @@
-# VFR Light [![Build Status](https://api.cirrus-ci.com/github/CaramelDunes/vfr_light.svg)](https://cirrus-ci.com/github/CaramelDunes/vfr_light)
+# VFR Light <img src="https://github.com/CaramelDunes/vfr_light/raw/master/assets/icon.png?raw=1" width="64" height="64" alt="Logo"> [![Build Status](https://api.cirrus-ci.com/github/CaramelDunes/vfr_light.svg)](https://cirrus-ci.com/github/CaramelDunes/vfr_light)
 
 VFR Light is a lightweight assistant for pilots flying under VFR.
 
@@ -10,7 +10,8 @@ VFR Light is a lightweight assistant for pilots flying under VFR.
 
  - Barometer-based altimeter
  - Flight trace recording
- - Primitive navigation aid
+ - Primitive navigation information panel
+ - VFR charts (France only for now)
  
 ## Requirements
 
