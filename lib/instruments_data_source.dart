@@ -1,26 +1,25 @@
 import 'dart:async';
 
-import 'package:enviro_sensors/enviro_sensors.dart';
+import 'package:environment_sensors/environment_sensors.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:meta/meta.dart';
 import 'standard_atmosphere.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class InstrumentsData {
   final LatLng position;
-  final double speedInKmH;
-  final double altitudeInM;
-  final double heightInM;
   final double headingInDeg;
   final DateTime time;
+  final double speedInKmH;
+  final double? altitudeInM;
+  final double? heightInM;
 
   InstrumentsData(
-      {@required this.position,
-      @required this.speedInKmH,
-      @required this.altitudeInM,
-      @required this.heightInM,
-      @required this.headingInDeg,
-      @required this.time});
+      {required this.position,
+      required this.headingInDeg,
+      required this.time,
+      required this.speedInKmH,
+      required this.altitudeInM,
+      required this.heightInM});
 }
 
 class InstrumentsDataSource {
@@ -31,23 +30,25 @@ class InstrumentsDataSource {
   final StreamController<InstrumentsData> _instrumentsDataStream =
       StreamController.broadcast();
 
-  StreamSubscription _pressureSubscription;
-  StreamSubscription _positionSubscription;
+  late StreamSubscription _pressureSubscription;
+  late StreamSubscription _positionSubscription;
 
-  LatLng _lastPosition;
-  double _lastSpeedInKmH;
-  double _lastAltitudeInM;
-  double _lastHeightInM;
-  double _lastHeadingInDeg;
+  LatLng? _lastPosition;
+  double? _lastSpeedInKmH;
+  double? _lastAltitudeInM;
+  double? _lastHeightInM;
+  double? _lastHeadingInDeg;
+  double? _lastPressure;
 
-  InstrumentsDataSource(
-      {@required this.qnh, @required this.surfaceAltitudeInM}) {
+  InstrumentsDataSource({required this.qnh, required this.surfaceAltitudeInM}) {
     _positionSubscription =
-        getPositionStream(desiredAccuracy: LocationAccuracy.high)
+        Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high)
             .listen(_onNewPosition);
 
-    _pressureSubscription =
-        barometerEvents.asBroadcastStream().listen(_onNewPressure);
+    _pressureSubscription = EnvironmentSensors()
+        .pressure
+        .asBroadcastStream()
+        .listen(_onNewPressure);
   }
 
   void dispose() {
@@ -55,42 +56,48 @@ class InstrumentsDataSource {
     _positionSubscription.cancel();
   }
 
-  Future<void> recalibrateAtSfc({@required double surfaceAltitudeInM}) async {
+  Future<void> recalibrateAtSfc({required double surfaceAltitudeInM}) async {
     this.surfaceAltitudeInM = surfaceAltitudeInM;
 
-    qnh = StandardAtmosphere.qnh(
-        pressure: (await barometerEvents.asBroadcastStream().first).reading,
-        altitude: surfaceAltitudeInM);
+    if (_lastPressure != null) {
+      qnh = StandardAtmosphere.qnh(
+          pressure: _lastPressure!, altitude: surfaceAltitudeInM);
+    }
   }
 
   Stream<InstrumentsData> get data => _instrumentsDataStream.stream;
 
-  LatLng get lastPosition => _lastPosition;
+  LatLng? get lastPosition => _lastPosition;
 
   void _sendData() {
     _instrumentsDataStream.add(InstrumentsData(
-        position: _lastPosition,
-        speedInKmH: _lastSpeedInKmH,
+        position: _lastPosition!,
+        speedInKmH: _lastSpeedInKmH!,
+        headingInDeg: _lastHeadingInDeg!,
+        time: DateTime.now(),
         altitudeInM: _lastAltitudeInM,
-        heightInM: _lastHeightInM,
-        headingInDeg: _lastHeadingInDeg,
-        time: DateTime.now()));
+        heightInM: _lastHeightInM));
   }
 
   void _onNewPosition(Position position) {
-    this._lastPosition = LatLng(position.latitude, position.longitude);
+    _lastPosition = LatLng(position.latitude, position.longitude);
     _lastSpeedInKmH = position.speed * 3.6;
     _lastHeadingInDeg = position.heading;
 
     _sendData();
   }
 
-  void _onNewPressure(BarometerEvent event) {
+  void _onNewPressure(double pressure) {
     _lastAltitudeInM =
-        StandardAtmosphere.altitude(qnh: qnh, pressure: event.reading);
+        StandardAtmosphere.altitude(qnh: qnh, pressure: pressure);
 
-    _lastHeightInM = _lastAltitudeInM - surfaceAltitudeInM;
+    _lastHeightInM = _lastAltitudeInM! - surfaceAltitudeInM;
+    _lastPressure = pressure;
 
-    _sendData();
+    if (_lastPosition != null &&
+        _lastSpeedInKmH != null &&
+        _lastHeadingInDeg != null) {
+      _sendData();
+    }
   }
 }

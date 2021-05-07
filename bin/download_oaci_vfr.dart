@@ -27,7 +27,7 @@ Future<bool> downloadTile(http.Client client, int x, int y, int zoom) async {
     String url =
         'https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-OACI&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix=$zoom&TileCol=$y&TileRow=$x';
 
-    var response = await client.get(url);
+    var response = await client.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       print('Downloaded $zoom/$x-$y.');
