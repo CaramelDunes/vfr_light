@@ -14,10 +14,10 @@ class FlightMap extends StatefulWidget {
   final LongPressCallback onLongPress;
 
   const FlightMap(
-      {Key key,
-      @required this.dataStream,
-      @required this.onLongPress,
-      this.route})
+      {Key? key,
+      required this.dataStream,
+      required this.onLongPress,
+      required this.route})
       : super(key: key);
 
   @override
@@ -27,10 +27,10 @@ class FlightMap extends StatefulWidget {
 class _FlightMapState extends State<FlightMap> {
   bool _centerOnPosition = false;
 
-  Marker _planeMarker;
+  Marker? _planeMarker;
   MapController _mapController = MapController();
-  StreamSubscription<InstrumentsData> _dataSubscription;
-  Polyline _headingPolyline;
+  late StreamSubscription<InstrumentsData> _dataSubscription;
+  Polyline? _headingPolyline;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _FlightMapState extends State<FlightMap> {
 
   @override
   void dispose() {
-    _dataSubscription?.cancel();
+    _dataSubscription.cancel();
 
     super.dispose();
   }
@@ -63,7 +63,7 @@ class _FlightMapState extends State<FlightMap> {
                 urlTemplate:
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: ['a', 'b', 'c']),
-           // PresetLayers.oaciVfrFrance,
+            // PresetLayers.oaciVfrFrance,
             TileLayerOptions(
                 opacity: 0.5,
                 tileProvider: AssetTileProvider(),
@@ -71,11 +71,11 @@ class _FlightMapState extends State<FlightMap> {
                 minNativeZoom: 8,
                 maxNativeZoom: 11),
             PolylineLayerOptions(polylines: [
-              if (_headingPolyline != null) _headingPolyline,
-              if (widget.route != null) widget.route
+              if (_headingPolyline != null) _headingPolyline!,
+              if (widget.route != null) widget.route!
             ]),
             MarkerLayerOptions(markers: [
-              if (_planeMarker != null) _planeMarker,
+              if (_planeMarker != null) _planeMarker!,
               ...widget.route.points
                   .asMap()
                   .entries
@@ -127,13 +127,13 @@ class _FlightMapState extends State<FlightMap> {
     }
 
     if (data.headingInDeg != null) {
-      _headingPolyline = _headingLine(data.position, data.headingInDeg);
+      _headingPolyline = _headingLine(data.position, data.headingInDeg!);
 
       _planeMarker = Marker(
           point: data.position,
           builder: (context) {
             return Transform.rotate(
-                angle: data.headingInDeg * 2 * pi / 360,
+                angle: data.headingInDeg! * 2 * pi / 360,
                 child: Icon(Icons.airplanemode_active,
                     color: Colors.purpleAccent));
           });

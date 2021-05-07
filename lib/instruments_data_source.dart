@@ -2,25 +2,24 @@ import 'dart:async';
 
 import 'package:enviro_sensors/enviro_sensors.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:meta/meta.dart';
 import 'standard_atmosphere.dart';
 import 'package:latlong/latlong.dart';
 
 class InstrumentsData {
   final LatLng position;
-  final double speedInKmH;
-  final double altitudeInM;
-  final double heightInM;
-  final double headingInDeg;
+  final double? speedInKmH;
+  final double? altitudeInM;
+  final double? heightInM;
+  final double? headingInDeg;
   final DateTime time;
 
   InstrumentsData(
-      {@required this.position,
-      @required this.speedInKmH,
-      @required this.altitudeInM,
-      @required this.heightInM,
-      @required this.headingInDeg,
-      @required this.time});
+      {required this.position,
+      required this.speedInKmH,
+      required this.altitudeInM,
+      required this.heightInM,
+      required this.headingInDeg,
+      required this.time});
 }
 
 class InstrumentsDataSource {
@@ -31,19 +30,18 @@ class InstrumentsDataSource {
   final StreamController<InstrumentsData> _instrumentsDataStream =
       StreamController.broadcast();
 
-  StreamSubscription _pressureSubscription;
-  StreamSubscription _positionSubscription;
+  late StreamSubscription _pressureSubscription;
+  late StreamSubscription _positionSubscription;
 
-  LatLng _lastPosition;
-  double _lastSpeedInKmH;
-  double _lastAltitudeInM;
-  double _lastHeightInM;
-  double _lastHeadingInDeg;
+  LatLng? _lastPosition;
+  double? _lastSpeedInKmH;
+  double? _lastAltitudeInM;
+  double? _lastHeightInM;
+  double? _lastHeadingInDeg;
 
-  InstrumentsDataSource(
-      {@required this.qnh, @required this.surfaceAltitudeInM}) {
+  InstrumentsDataSource({required this.qnh, required this.surfaceAltitudeInM}) {
     _positionSubscription =
-        getPositionStream(desiredAccuracy: LocationAccuracy.high)
+        Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high)
             .listen(_onNewPosition);
 
     _pressureSubscription =
@@ -55,7 +53,7 @@ class InstrumentsDataSource {
     _positionSubscription.cancel();
   }
 
-  Future<void> recalibrateAtSfc({@required double surfaceAltitudeInM}) async {
+  Future<void> recalibrateAtSfc({required double surfaceAltitudeInM}) async {
     this.surfaceAltitudeInM = surfaceAltitudeInM;
 
     qnh = StandardAtmosphere.qnh(
@@ -65,11 +63,11 @@ class InstrumentsDataSource {
 
   Stream<InstrumentsData> get data => _instrumentsDataStream.stream;
 
-  LatLng get lastPosition => _lastPosition;
+  LatLng? get lastPosition => _lastPosition;
 
   void _sendData() {
     _instrumentsDataStream.add(InstrumentsData(
-        position: _lastPosition,
+        position: _lastPosition!,
         speedInKmH: _lastSpeedInKmH,
         altitudeInM: _lastAltitudeInM,
         heightInM: _lastHeightInM,
@@ -89,7 +87,7 @@ class InstrumentsDataSource {
     _lastAltitudeInM =
         StandardAtmosphere.altitude(qnh: qnh, pressure: event.reading);
 
-    _lastHeightInM = _lastAltitudeInM - surfaceAltitudeInM;
+    _lastHeightInM = _lastAltitudeInM! - surfaceAltitudeInM;
 
     _sendData();
   }

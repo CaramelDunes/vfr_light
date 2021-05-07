@@ -23,12 +23,10 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  InstrumentsDataSource _instrumentsDataSource;
-  RouteManager _routeManager;
-
-  NavigationDataSource _navigationDataSource;
-
-  StreamSubscription<LatLng> _destinationStreamSubscription;
+  late InstrumentsDataSource _instrumentsDataSource;
+  late RouteManager _routeManager;
+  NavigationDataSource? _navigationDataSource;
+  late StreamSubscription<LatLng> _destinationStreamSubscription;
 
   @override
   void initState() {
@@ -113,7 +111,7 @@ class _MapScreenState extends State<MapScreen> {
                                 },
                               ),
                               SizedBox(height: 8),
-                              RaisedButton(
+                              ElevatedButton(
                                 child: Text('Submit'),
                                 onPressed: () {
                                   print(double.parse(val));
@@ -163,13 +161,12 @@ class _MapScreenState extends State<MapScreen> {
           ),
           if (_navigationDataSource != null)
             StreamBuilder(
-                stream: _navigationDataSource.data,
+                stream: _navigationDataSource!.data,
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.active:
                       return NavigationInfo(data: snapshot.data);
-                      break;
 
                     case ConnectionState.none:
                     case ConnectionState.waiting:
@@ -181,7 +178,6 @@ class _MapScreenState extends State<MapScreen> {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       );
-                      break;
                   }
                 }),
           Expanded(
@@ -196,7 +192,6 @@ class _MapScreenState extends State<MapScreen> {
                 switch (snapshot.connectionState) {
                   case ConnectionState.active:
                     return Instruments(data: snapshot.data);
-                    break;
 
                   case ConnectionState.none:
                   case ConnectionState.waiting:
@@ -208,7 +203,6 @@ class _MapScreenState extends State<MapScreen> {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     );
-                    break;
                 }
               }),
         ],

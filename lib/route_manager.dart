@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:vfr_light/instruments_data_source.dart';
@@ -9,11 +8,11 @@ class RouteManager {
   List<LatLng> waypoints = [];
   StreamController<LatLng> _destinationStream = StreamController.broadcast();
   final InstrumentsDataSource instrumentsDataSource;
-  StreamSubscription<InstrumentsData> _instrumentsDataSubscription;
+  late StreamSubscription<InstrumentsData> _instrumentsDataSubscription;
   int _destinationIndex = 0;
   bool _navigationStarted = false;
 
-  RouteManager({@required this.instrumentsDataSource}) {
+  RouteManager({required this.instrumentsDataSource}) {
     _instrumentsDataSubscription =
         instrumentsDataSource.data.listen(_onInstrumentsData);
   }
@@ -53,7 +52,7 @@ class RouteManager {
     if (_navigationStarted && waypoints.isNotEmpty && data.position != null) {
       Distance d = Distance();
       double distanceInM =
-          d.distance(data.position, waypoints[_destinationIndex]);
+          d.distance(data.position, waypoints[_destinationIndex]).toDouble();
 
       if (distanceInM < 20 && waypoints.length > _destinationIndex + 1) {
         _destinationStream.add(waypoints[++_destinationIndex]);

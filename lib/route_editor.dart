@@ -4,7 +4,7 @@ import 'package:latlong/latlong.dart';
 class RouteEditor extends StatefulWidget {
   final List<LatLng> waypoints;
 
-  const RouteEditor({Key key, this.waypoints}) : super(key: key);
+  const RouteEditor({Key? key, required this.waypoints}) : super(key: key);
 
   @override
   _RouteEditorState createState() => _RouteEditorState();
@@ -30,7 +30,7 @@ class _RouteEditorState extends State<RouteEditor> {
 
   double _tripLengthInM() {
     double length = 0;
-    LatLng from;
+    LatLng? from;
     Distance d = Distance();
 
     widget.waypoints.forEach((waypoint) {
@@ -46,12 +46,12 @@ class _RouteEditorState extends State<RouteEditor> {
 
   List<double> _legDistancesInM() {
     List<double> distances = [0];
-    LatLng from;
+    LatLng? from;
     Distance d = Distance();
 
     widget.waypoints.forEach((waypoint) {
       if (from != null) {
-        distances.add(d.distance(from, waypoint));
+        distances.add(d.distance(from, waypoint).toDouble());
       }
 
       from = waypoint;

@@ -8,7 +8,7 @@ class NavigationInfo extends StatelessWidget {
 
   final NavigationData data;
 
-  const NavigationInfo({Key key, @required this.data}) : super(key: key);
+  const NavigationInfo({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class NavigationInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle2),
                 Text(
                     data.distanceInM != null
-                        ? (data.distanceInM / 1000).toStringAsFixed(1)
+                        ? (data.distanceInM! / 1000).toStringAsFixed(1)
                         : '???',
                     style: commonStyle),
               ],
@@ -35,7 +35,7 @@ class NavigationInfo extends StatelessWidget {
                 Text('Duration', style: Theme.of(context).textTheme.subtitle2),
                 Text(
                     data.duration != null
-                        ? '${data.duration.inHours}h${data.duration.inMinutes % 60}'
+                        ? '${data.duration!.inHours}h${data.duration!.inMinutes % 60}'
                         : '???',
                     style: commonStyle),
               ],
@@ -46,7 +46,7 @@ class NavigationInfo extends StatelessWidget {
                 Text('ETA', style: Theme.of(context).textTheme.subtitle2),
                 Text(
                     data.eta != null
-                        ? '${data.eta.hour}:${data.eta.minute}'
+                        ? '${data.eta!.hour}:${data.eta!.minute}'
                         : '???',
                     style: commonStyle),
               ],
