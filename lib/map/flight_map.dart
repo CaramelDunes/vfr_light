@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:vfr_light/instruments_data_source.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import '../preset_layers.dart';
 
 class FlightMap extends StatefulWidget {
@@ -14,10 +13,10 @@ class FlightMap extends StatefulWidget {
   final LongPressCallback onLongPress;
 
   const FlightMap(
-      {Key key,
-      @required this.dataStream,
-      @required this.onLongPress,
-      this.route})
+      {Key? key,
+      required this.dataStream,
+      required this.onLongPress,
+      required this.route})
       : super(key: key);
 
   @override
@@ -27,10 +26,10 @@ class FlightMap extends StatefulWidget {
 class _FlightMapState extends State<FlightMap> {
   bool _centerOnPosition = false;
 
-  Marker _planeMarker;
+  Marker? _planeMarker;
   MapController _mapController = MapController();
-  StreamSubscription<InstrumentsData> _dataSubscription;
-  Polyline _headingPolyline;
+  late StreamSubscription<InstrumentsData> _dataSubscription;
+  Polyline? _headingPolyline;
 
   @override
   void initState() {
@@ -41,7 +40,7 @@ class _FlightMapState extends State<FlightMap> {
 
   @override
   void dispose() {
-    _dataSubscription?.cancel();
+    _dataSubscription.cancel();
 
     super.dispose();
   }
@@ -57,13 +56,16 @@ class _FlightMapState extends State<FlightMap> {
               zoom: 10.0,
               swPanBoundary: LatLng(41.327326, -5.734863),
               nePanBoundary: LatLng(51.138001, 9.382324),
-              onLongPress: widget.onLongPress),
+              onLongPress: widget.onLongPress,
+              interactiveFlags: InteractiveFlag.drag |
+                  InteractiveFlag.pinchZoom |
+                  InteractiveFlag.pinchMove),
           layers: [
             TileLayerOptions(
                 urlTemplate:
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: ['a', 'b', 'c']),
-           // PresetLayers.oaciVfrFrance,
+            // PresetLayers.oaciVfrFrance,
             TileLayerOptions(
                 opacity: 0.5,
                 tileProvider: AssetTileProvider(),
@@ -71,11 +73,11 @@ class _FlightMapState extends State<FlightMap> {
                 minNativeZoom: 8,
                 maxNativeZoom: 11),
             PolylineLayerOptions(polylines: [
-              if (_headingPolyline != null) _headingPolyline,
-              if (widget.route != null) widget.route
+              if (_headingPolyline != null) _headingPolyline!,
+              widget.route
             ]),
             MarkerLayerOptions(markers: [
-              if (_planeMarker != null) _planeMarker,
+              if (_planeMarker != null) _planeMarker!,
               ...widget.route.points
                   .asMap()
                   .entries
@@ -126,19 +128,17 @@ class _FlightMapState extends State<FlightMap> {
       _mapController.move(data.position, _mapController.zoom);
     }
 
-    if (data.headingInDeg != null) {
-      _headingPolyline = _headingLine(data.position, data.headingInDeg);
+    _headingPolyline = _headingLine(data.position, data.headingInDeg);
 
-      _planeMarker = Marker(
-          point: data.position,
-          builder: (context) {
-            return Transform.rotate(
-                angle: data.headingInDeg * 2 * pi / 360,
-                child: Icon(Icons.airplanemode_active,
-                    color: Colors.purpleAccent));
-          });
+    _planeMarker = Marker(
+        point: data.position,
+        builder: (context) {
+          return Transform.rotate(
+              angle: data.headingInDeg * 2 * pi / 360,
+              child:
+                  Icon(Icons.airplanemode_active, color: Colors.purpleAccent));
+        });
 
-      setState(() {});
-    }
+    setState(() {});
   }
 }

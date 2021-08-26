@@ -9,7 +9,7 @@ class Instruments extends StatelessWidget {
 
   final InstrumentsData data;
 
-  const Instruments({Key key, @required this.data}) : super(key: key);
+  const Instruments({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +25,14 @@ class Instruments extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle2),
                 Text(
                     data.heightInM != null
-                        ? StandardAtmosphere.feetFromMeters(data.heightInM)
+                        ? StandardAtmosphere.feetFromMeters(data.heightInM!)
                             .round()
                             .toString()
                         : '???',
                     style: commonStyle),
                 Text('Height (m)',
                     style: Theme.of(context).textTheme.subtitle2),
-                Text(
-                    data.heightInM != null
-                        ? data.heightInM.round().toString()
-                        : '???',
+                Text(data.heightInM?.round().toString() ?? '???',
                     style: commonStyle),
               ],
             ),
@@ -46,17 +43,15 @@ class Instruments extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle2),
                 Text(
                     data.altitudeInM != null
-                        ? StandardAtmosphere.feetFromMeters(data.altitudeInM)
+                        ? StandardAtmosphere.feetFromMeters(data.altitudeInM!)
                             .round()
                             .toString()
                         : '???',
                     style: commonStyle),
                 Text('Altitude (m)',
                     style: Theme.of(context).textTheme.subtitle2),
-                Text(
-                    data.altitudeInM != null
-                        ? data.altitudeInM.round().toString()
-                        : '???',
+                Text(data.altitudeInM?.round().toString() ?? '???',
+                    // FIXME only one ?.?
                     style: commonStyle),
               ],
             ),
@@ -65,18 +60,10 @@ class Instruments extends StatelessWidget {
               children: [
                 Text('Heading (°)',
                     style: Theme.of(context).textTheme.subtitle2),
-                Text(
-                    data.headingInDeg != null
-                        ? data.headingInDeg.round().toString()
-                        : '???',
-                    style: commonStyle),
+                Text(data.headingInDeg.round().toString(), style: commonStyle),
                 Text('Speed (km/h)',
                     style: Theme.of(context).textTheme.subtitle2),
-                Text(
-                    data.speedInKmH != null
-                        ? data.speedInKmH.round().toString()
-                        : '???',
-                    style: commonStyle),
+                Text(data.speedInKmH.round().toString(), style: commonStyle),
               ],
             ),
           ],

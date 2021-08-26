@@ -1,31 +1,31 @@
 name: vfr_light
-description: A new Flutter project.
+description: A lightweight assistant for pilots flying under VFR.
+publish_to: 'none'
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_map: ^0.10.1
-  enviro_sensors: ^1.0.1
-  geolocator: ^6.0.0+1
-  font_awesome_flutter: ^8.8.1
-  path_provider: ^1.6.11
-  wakelock: ^0.1.4+2
-  flutter_foreground_plugin: ^0.5.0
-  cached_network_image: ^2.3.1
-  http: ^0.12.2
+  flutter_map: ^0.13.1
+  environment_sensors: ^0.2.0
+  geolocator: ^7.1.0
+  font_awesome_flutter: ^9.1.0
+  path_provider: ^2.0.1
+  wakelock: ^0.5.2
+  flutter_background: ^1.0.2+1
+  cached_network_image: ^3.0.0
+  http: ^0.13.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_launcher_icons: "^0.8.0"
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   android: "launcher_icon"

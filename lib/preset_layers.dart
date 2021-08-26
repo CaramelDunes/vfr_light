@@ -5,28 +5,27 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path/path.dart' as p;
 
-class LongTermCacheManager extends BaseCacheManager {
-  static const key = 'libCachedImageDataLongTerm';
-
-  static LongTermCacheManager _instance;
-
-  factory LongTermCacheManager() {
-    _instance ??= LongTermCacheManager._();
-    return _instance;
-  }
-
-  LongTermCacheManager._() : super(key);
-
-  @override
-  Future<String> getFilePath() async {
-    var directory = (await getExternalCacheDirectories())[0];
-    return p.join(directory.path, key);
-  }
-}
+//
+// class LongTermCacheManager extends BaseCacheManager {
+//   static const key = 'libCachedImageDataLongTerm';
+//
+//   static LongTermCacheManager _instance;
+//
+//   factory LongTermCacheManager() {
+//     _instance ??= LongTermCacheManager._();
+//     return _instance;
+//   }
+//
+//   LongTermCacheManager._() : super(key, maxNrOfCacheObjects: 10000);
+//
+//   @override
+//   Future<String> getFilePath() async {
+//     var directory = (await getExternalCacheDirectories())[0];
+//     return p.join(directory.path, key);
+//   }
+// }
 
 class PresetLayers {
-
-
   static TileLayerOptions oaciVfrFrance = TileLayerOptions(
       opacity: 0.5,
       urlTemplate:
