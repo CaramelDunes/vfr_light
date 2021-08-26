@@ -47,6 +47,11 @@ class _FlightMapState extends State<FlightMap> {
 
   @override
   Widget build(BuildContext context) {
+    final int interactiveFlags = (_centerOnPosition
+            ? InteractiveFlag.none
+            : InteractiveFlag.drag | InteractiveFlag.pinchMove) |
+        InteractiveFlag.pinchZoom;
+
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -57,9 +62,7 @@ class _FlightMapState extends State<FlightMap> {
               swPanBoundary: LatLng(41.327326, -5.734863),
               nePanBoundary: LatLng(51.138001, 9.382324),
               onLongPress: widget.onLongPress,
-              interactiveFlags: InteractiveFlag.drag |
-                  InteractiveFlag.pinchZoom |
-                  InteractiveFlag.pinchMove),
+              interactiveFlags: interactiveFlags),
           layers: [
             TileLayerOptions(
                 urlTemplate:
