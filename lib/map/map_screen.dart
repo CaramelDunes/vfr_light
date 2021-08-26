@@ -16,7 +16,6 @@ import '../instruments_data_source.dart';
 import '../over_cities_screen.dart';
 import '../navigation_data_source.dart';
 import '../navigation_info.dart';
-import '../settings_screen.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -37,7 +36,7 @@ class _MapScreenState extends State<MapScreen> {
     Wakelock.enable();
 
     _instrumentsDataSource =
-        InstrumentsDataSource(qnh: 1022.0, surfaceAltitudeInM: 104);
+        InstrumentsDataSource(qnh: 1013.25, surfaceAltitudeInM: 0);
 
     _routeManager = RouteManager(instrumentsDataSource: _instrumentsDataSource);
 
@@ -155,17 +154,6 @@ class _MapScreenState extends State<MapScreen> {
                   }
                 },
               ),
-              IconButton(
-                icon: Icon(Icons.settings, color: Colors.white),
-                tooltip: 'Settings',
-                color: _navigationDataSource != null ? Colors.green : null,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingsScreen()));
-                },
-              )
             ],
           ),
           if (_navigationDataSource != null)
