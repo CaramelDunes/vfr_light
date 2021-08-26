@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:environment_sensors/environment_sensors.dart';
 import 'package:geolocator/geolocator.dart';
-import 'standard_atmosphere.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'standard_atmosphere.dart';
 
 class InstrumentsData {
   final LatLng position;
@@ -12,6 +13,7 @@ class InstrumentsData {
   final double speedInKmH;
   final double? altitudeInM;
   final double? heightInM;
+  final int? flightLevel;
 
   InstrumentsData(
       {required this.position,
@@ -19,7 +21,8 @@ class InstrumentsData {
       required this.time,
       required this.speedInKmH,
       required this.altitudeInM,
-      required this.heightInM});
+      required this.heightInM,
+      required this.flightLevel});
 }
 
 class InstrumentsDataSource {
@@ -39,6 +42,7 @@ class InstrumentsDataSource {
   double? _lastHeightInM;
   double? _lastHeadingInDeg;
   double? _lastPressure;
+  int? _lastFlightLevel;
 
   InstrumentsDataSource({required this.qnh, required this.surfaceAltitudeInM}) {
     _positionSubscription =
@@ -76,7 +80,8 @@ class InstrumentsDataSource {
         headingInDeg: _lastHeadingInDeg!,
         time: DateTime.now(),
         altitudeInM: _lastAltitudeInM,
-        heightInM: _lastHeightInM));
+        heightInM: _lastHeightInM,
+        flightLevel: _lastFlightLevel));
   }
 
   void _onNewPosition(Position position) {
@@ -92,6 +97,8 @@ class InstrumentsDataSource {
         StandardAtmosphere.altitude(qnh: qnh, pressure: pressure);
 
     _lastHeightInM = _lastAltitudeInM! - surfaceAltitudeInM;
+    _lastFlightLevel = StandardAtmosphere.flightLevel(pressure: pressure);
+
     _lastPressure = pressure;
 
     if (_lastPosition != null &&

@@ -10,6 +10,7 @@ class _OverCitiesScreenState extends State<OverCitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           title: Text('Overflying cities'),
         ),
         body: Center(

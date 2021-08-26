@@ -16,4 +16,14 @@ class StandardAtmosphere {
   static double feetFromMeters(double meters) {
     return meters * 3.2808;
   }
+
+  // Not exactly flight level as it is not rounded to nearest multiple of 5.
+  static int? flightLevel({required double pressure}) {
+    final double flightLevelInFeet = StandardAtmosphere.feetFromMeters(
+        StandardAtmosphere.altitude(qnh: 1013.25, pressure: pressure));
+
+    if (flightLevelInFeet >= 0) {
+      return (flightLevelInFeet / 100.0).floor();
+    }
+  }
 }

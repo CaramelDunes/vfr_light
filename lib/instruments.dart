@@ -58,9 +58,9 @@ class Instruments extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Heading (°)',
+                Text('Flight Level',
                     style: Theme.of(context).textTheme.subtitle2),
-                Text(data.headingInDeg.round().toString(), style: commonStyle),
+                Text(data.flightLevel?.toString() ?? '???', style: commonStyle),
                 Text('Speed (km/h)',
                     style: Theme.of(context).textTheme.subtitle2),
                 Text(data.speedInKmH.round().toString(), style: commonStyle),
