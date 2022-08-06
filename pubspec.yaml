@@ -11,21 +11,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_map: ^0.13.1
+  flutter_map: ^2.2.0
   environment_sensors: ^0.2.0
-  geolocator: ^7.1.0
-  font_awesome_flutter: ^9.1.0
+  geolocator: ^9.0.1
+  font_awesome_flutter: ^10.1.0
   path_provider: ^2.0.1
-  wakelock: ^0.5.2
+  wakelock: ^0.6.2
   flutter_background: ^1.0.2+1
   cached_network_image: ^3.0.0
   http: ^0.13.0
+  positioned_tap_detector_2: ^1.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_launcher_icons: ^0.9.0
+
+  test: ^1.17.9
 
 flutter_icons:
   android: "launcher_icon"

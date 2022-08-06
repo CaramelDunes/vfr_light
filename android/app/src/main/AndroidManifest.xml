@@ -8,12 +8,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
-    <application
-            android:name="io.flutter.app.FlutterApplication"
+    <application   
+            android:name="${applicationName}"
             android:label="VFR Light"
             android:icon="@mipmap/launcher_icon">
         <activity
-                android:name=".MainActivity"
+                android:name="io.flutter.embedding.android.FlutterActivity"
                 android:launchMode="singleTop"
                 android:theme="@style/LaunchTheme"
                 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

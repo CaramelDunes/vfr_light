@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class UserAgentClient extends http.BaseClient {
   static final String firefoxUserAgent =
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0';
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0';
 
   final String userAgent;
   final http.Client _inner;
@@ -26,7 +26,6 @@ Future<bool> downloadTile(http.Client client, int x, int y, int zoom) async {
   if (!await file.exists()) {
     String url =
         'https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-OACI&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix=$zoom&TileCol=$y&TileRow=$x';
-
     var response = await client.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -35,7 +34,7 @@ Future<bool> downloadTile(http.Client client, int x, int y, int zoom) async {
       await file.writeAsBytes(response.bodyBytes);
       return true;
     } else {
-      print('Error downloading $zoom/$x-$y.');
+      print('Error downloading $zoom/$x-$y: HTTP ${response.statusCode}.');
       return false;
     }
   } else {

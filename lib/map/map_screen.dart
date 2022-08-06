@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_background/flutter_background.dart';
 
+import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../record_button.dart';
@@ -207,7 +209,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void _onLongPress(LatLng position) {
+  void _onLongPress(TapPosition _, LatLng position) {
     showDialog(
         context: context,
         builder: (c) {

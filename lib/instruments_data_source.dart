@@ -26,7 +26,7 @@ class InstrumentsData {
 }
 
 class InstrumentsDataSource {
-  final LocationOptions locationOptions = LocationOptions();
+  final LocationSettings locationSettings = LocationSettings();
 
   double qnh;
   double surfaceAltitudeInM;
@@ -46,7 +46,7 @@ class InstrumentsDataSource {
 
   InstrumentsDataSource({required this.qnh, required this.surfaceAltitudeInM}) {
     _positionSubscription =
-        Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high)
+        Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen(_onNewPosition);
 
     _pressureSubscription = EnvironmentSensors()
